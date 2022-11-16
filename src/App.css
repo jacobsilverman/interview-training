@@ -2,6 +2,26 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
 }
 
+.topic {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.paper-element {
+  padding: 20px;
+}
+
+div.content {
+  padding: 20px;
+  align-items: flex-start;
+}
+
+h2 {
+  font-size: 38px;
+}
+
+h3 {
+  margin-top: 0px;
+}
