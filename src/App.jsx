@@ -1,14 +1,41 @@
-import "./App.css";
+import { useState } from 'react';
+
 import { questions } from "./Constants/Questions.jsx";
-import { Paper } from '@mui/material';
+import { Button, Paper } from '@mui/material';
+
+import "./App.css";
 
 function App() {
-  const questionAnswer = (obj) => {
+  const [show, setShow] = useState({
+    "Javascript": {},
+    "React": {},
+    "Css": {},
+    "Html": {},
+    "Network": {}
+  });
+
+  const showAnswer = (topic, key) => {
+    console.log(show[topic][key]);
+    setShow(current => {
+      return {
+        ...current,
+        [topic]: {
+          [key]: !current[topic][key]
+        }
+      }
+    });
+  }
+
+  const questionAnswer = (obj, topic) => {
     return Object.entries(obj).map(([innerKey, value]) => {
       return (
-        <Paper className="paper-element" elevation={9} key={innerKey}>
-          <h3>{value.question()}</h3>
-          <div className="content">{value.answer()}</div>
+        <Paper className="paper-element" elevation={9} key={topic+innerKey}>
+          <div>
+            <h3>{value.question()}</h3>
+            <Button onClick={() => showAnswer(topic, innerKey)}>{(!show[topic][innerKey]) ? 'show answer' : 'hide answer'}</Button>
+          </div>
+          
+          {show[topic][innerKey] && <div className="content">{value.answer()}</div>}
         </Paper>
       )
     })
@@ -20,7 +47,7 @@ function App() {
         return (
           <div key={key}>
             <h2 className="topic">{key}</h2>
-            {questionAnswer(questions[key])}
+            {questionAnswer(questions[key], key)}
           </div>
         )
       })

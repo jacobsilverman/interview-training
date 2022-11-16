@@ -18,7 +18,7 @@ export const questions = {
                 const part3 = `<script src='file.js' async></script>`;
                 return (
                     <>
-                        <div><b>1.</b> excuted synschronously, neither can be used inline, need src. {part1}</div>
+                        <div><b>1.</b> none: excuted synschronously, neither can be used inline, need src. {part1}</div>
                         <div><b>2.</b> defer: downloads the script while the document is stilling parsing, but waits till it finishes parsing before executing it. Scripts rely on eachother use DOMContentLoaded event listener is the same. {part2}</div>
                         <div><b>3.</b> async: downloads the script during parsing the doc but will pause the parser to execute the script before it finishes parsing. Doesn't neccessarily execute in order. Use if scripts are independent of eachother. {part3}</div>
                     </>
@@ -37,7 +37,7 @@ export const questions = {
             
         }
     },
-    "CSS": {
+    "Css": {
         0: {
             "question": function () {
                 return (<div>types of @ media properties</div>)
@@ -57,7 +57,7 @@ export const questions = {
             
         }
     },
-    "HTML": {
+    "Html": {
         0: {
             "question": function () {
                 return (<div>describe and element</div>)
@@ -67,7 +67,7 @@ export const questions = {
             }
         }
     },
-    "NETWORK": {
+    "Network": {
         0: {
             "question": function() {
                 return (<div>What is CORS</div>);
