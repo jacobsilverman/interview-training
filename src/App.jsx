@@ -23,11 +23,12 @@ function App() {
           [key]: !current[topic][key]
         }
       }
-    });
+    })
   }
 
   const questionAnswer = (obj, topic) => {
     return Object.entries(obj).map(([innerKey, value]) => {
+      const containerCls = `${(!show[topic][innerKey]) ? 'content' : ' content expand'}`
       return (
         <Paper className="paper-element" elevation={9} key={topic+innerKey}>
           <div>
@@ -35,7 +36,7 @@ function App() {
             <Button onClick={() => showAnswer(topic, innerKey)}>{(!show[topic][innerKey]) ? 'show answer' : 'hide answer'}</Button>
           </div>
           
-          {show[topic][innerKey] && <div className="content">{value.answer()}</div>}
+          {show[topic][innerKey] && <div className={containerCls}>{value.answer()}</div>}
         </Paper>
       )
     })
@@ -47,7 +48,10 @@ function App() {
         return (
           <div key={key}>
             <h2 className="topic">{key}</h2>
-            {questionAnswer(questions[key], key)}
+            <div className="questions-container">
+              {questionAnswer(questions[key], key)}
+            </div>
+            
           </div>
         )
       })

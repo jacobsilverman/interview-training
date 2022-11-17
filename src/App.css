@@ -12,11 +12,31 @@
 .paper-element {
   padding: 20px;
   width: 85vw;
+  transition: 2s;
+  min-height: 80px;
+}
+
+.paper-element .expand {
+  animation: displayanimation .2s linear;
+}
+
+@keyframes displayanimation {
+  from {
+    transform: scaleY(0) translate(0, -100%);
+  }
+
+  to {
+    transform: scaleY(1);
+  }
 }
 
 div.content {
   padding: 20px;
   align-items: flex-start;
+}
+
+.questions-container>:not(:last-child) {
+  margin-bottom: 40px;
 }
 
 h2 {
