@@ -20,6 +20,7 @@ function App() {
       return {
         ...current,
         [topic]: {
+          ...current[topic],
           [key]: !current[topic][key]
         }
       }
@@ -32,7 +33,7 @@ function App() {
       return (
         <Paper className="paper-element" elevation={9} key={topic+innerKey}>
           <div>
-            <h3>{value.question()}</h3>
+            <div>{value.question()}</div>
             <Button onClick={() => showAnswer(topic, innerKey)}>{(!show[topic][innerKey]) ? 'show answer' : 'hide answer'}</Button>
           </div>
           

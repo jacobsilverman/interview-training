@@ -1,4 +1,6 @@
 import "./Questions.css";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { twilight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const highlight = (s) => {
     return (<span className="highlight">{s}</span>);
@@ -9,63 +11,84 @@ export const questions = {
         0: {
             "question": function() {
                 return (
-                    <div className="question1">
-                        <span>difference between <span className="highlight">async</span> and <span className="highlight">defer</span> in the <span className="highlight">&lt;script&gt;</span> tag and if none are used</span>
-                    </div>
+                    <h3>difference between <span className="highlight">async</span> and <span className="highlight">defer</span> in the <span className="highlight">&lt;script&gt;</span> tag and if none are used</h3>
                 )
             },
             "answer": function() {
-                const part1 = `<script src='file.js'></script>`
-                const part2 = `<script src='file.js' defer></script>`;
-                const part3 = `<script src='file.js' async></script>`;
+                const codeBlock = `
+                    <script src='file.js'></script>
+                    <script src='file.js' defer></script>
+                    <script src='file.js' async></script>
+                `;
+
                 return (
                     <>
-                        <div><b>1.</b> none: excuted synschronously, neither can be used inline, need src. {part1}</div>
-                        <div><b>2.</b> defer: downloads the script while the document is stilling parsing, but waits till it finishes parsing before executing it. Scripts rely on eachother use DOMContentLoaded event listener is the same. {part2}</div>
-                        <div><b>3.</b> async: downloads the script during parsing the doc but will pause the parser to execute the script before it finishes parsing. Doesn't neccessarily execute in order. Use if scripts are independent of eachother. {part3}</div>
+                        <div><b>1.</b> none: excuted synschronously, neither can be used inline, need src.</div>
+                        <div><b>2.</b> defer: downloads the script while the document is stilling parsing, but waits till it finishes parsing before executing it. Scripts rely on eachother use DOMContentLoaded event listener is the same.</div>
+                        <div><b>3.</b> async: downloads the script during parsing the doc but will pause the parser to execute the script before it finishes parsing. Doesn't neccessarily execute in order. Use if scripts are independent of eachother.</div>
+                        <SyntaxHighlighter language="html" style={twilight}>
+                            {codeBlock}
+                        </SyntaxHighlighter>
                     </>
                 );
             }
         },
         1: {
             "question": function() {
-                return (<div>describe {highlight(".bind()")} and how to use</div>);
+                return (<h3>describe {highlight(".bind()")} and how to use</h3>);
             },
             "answer": function() {
+                const codeBlock = `
+                    var a = function(){}.bind(1);// works
+                    var a = a.bind(1);// works
+                    function a(){}.bind(1)// doesn't work
+                    a().bind(1);// doesn't work
+                `;
+
                 return (
                     <>
                         <div>Has to be used when we define a function expression, and not when we call it. Also doesn't work with function declarations.</div>
-                        <div><b>var a = function()&#123; &#125;.bind(1);{highlight("// works")}</b></div>
-                        <div><b>var a = a.bind(1);{highlight("// works")}</b></div>
-                        <div><b>function a()&#123; &#125;.bind(1);{highlight("// doesn't works")}</b></div>
-                        <div><b>a().bind(1);{highlight("// doesn't works")}</b></div>
-                    
+                        <SyntaxHighlighter language="javascript" style={twilight}>
+                            {codeBlock}
+                        </SyntaxHighlighter>
                     </>
                 );
             }
         },
         2: {
             "question": function() {
+                const codeBlock = `
+                    function ex(){
+                        console.log(this);
+                    }
+                    const boundEx = bind(ex, {a: true})
+                    boundEx.call({b: true})// logs {a: true}
+                `;
+
                 return (
                     <>
-                        <div>Create a standalone function bind that is functionally equivalent to the method Function.prototype.bind</div>
+                        <h3>Create a standalone function bind that is functionally equivalent to the method Function.prototype.bind</h3>
                         <br></br>
-                        <div>function ex()&#123;</div> 
-                        <div>&emsp;console.log(this);</div>
-                        <div>&#125;</div>
-                        <div>const boundex = bind(ex, &#123;a: true&#125;))</div>
-                        <div>boundEx.call(&#123;b: true&#125;)// logs &#123;a: true&#125;</div>
+                        <SyntaxHighlighter language="javascript" style={twilight}>
+                            {codeBlock}
+                        </SyntaxHighlighter>
                     </>
                 );
             },
             "answer": function() {
+                const codeBlock = `
+                    var a = function(){}.bind(1);//works
+                    var a = a.bind(1);// works
+                    function a(){}.bind(1);// doesn't work
+                    a().bind(1);// doesn't work
+                `;
+
                 return (
                     <>
                         <div>Has to be used when we define a function expression, and not when we call it. Also doesn't work with function declarations.</div>
-                        <div><b>var a = function()&#123; &#125;.bind(1);{highlight("// works")}</b></div>
-                        <div><b>var a = a.bind(1);{highlight("// works")}</b></div>
-                        <div><b>function a()&#123; &#125;.bind(1);{highlight("// doesn't works")}</b></div>
-                        <div><b>a().bind(1);{highlight("// doesn't works")}</b></div>
+                        <SyntaxHighlighter language="javascript" style={twilight}>
+                            {codeBlock}
+                        </SyntaxHighlighter>
                     </>
                 );
             }
@@ -74,7 +97,7 @@ export const questions = {
     "React": {
         0: {
             "question": function() {
-                return (<div>What is the virtual DOM</div>)
+                return (<h3>What is the virtual DOM</h3>)
             },
             "answer":  function() {
                 return (<div>not the DOM</div>);
@@ -84,7 +107,7 @@ export const questions = {
     "Css": {
         0: {
             "question": function() {
-                return (<div>types of @ media properties</div>)
+                return (<h3>types of @ media properties</h3>)
             },
             "answer": function() {
                 const example = `<link rel="stylesheet" media="screen and (max-width: 600px)`;
@@ -101,22 +124,26 @@ export const questions = {
         },
         1: {
             "question": function() {
-                return (<div>How to animate show and disappearing an item</div>);
+                return (<h3>How to animate show and disappearing an item</h3>);
             },
             "answer": function() {
+                const codeBlock = `
+                    .show{
+                        visibility: visible;
+                        opacity: 1;
+                        transition: opacity 3s, visibility 3s;
+                    }
+                    .hide {
+                        visibility: hidden;
+                        opacity: 0;
+                        transition: opacity 3s, visibility 3s;
+                    }
+                `;
+
                 return (
-                    <> 
-                        <div><b>.show</b> &#123;</div>
-                        <div>&emsp;visibility: visible;</div>
-                        <div>&emsp;opacity: 1;</div>
-                        <div>&emsp;transition: opacity 3s, visibility 3s;</div>
-                        <div>&#125;</div>
-                        <div><b>.hide</b> &#123;</div>
-                        <div>&emsp;visibility: hidden;</div>
-                        <div>&emsp;opacity: 0;</div>
-                        <div>&emsp;transition: opacity 3s, visibility 3s;</div>
-                        <div>&#125;</div>
-                    </>
+                    <SyntaxHighlighter language="css" style={twilight}>
+                        {codeBlock}
+                    </SyntaxHighlighter>
                 );
             }
         }
@@ -124,7 +151,7 @@ export const questions = {
     "Html": {
         0: {
             "question": function() {
-                return (<div>describe and element</div>)
+                return (<h3>describe and element</h3>)
             },
             "answer": function() {
                 return (<div>HTML</div>);
@@ -134,7 +161,7 @@ export const questions = {
     "Network": {
         0: {
             "question": function() {
-                return (<div>What is CORS</div>);
+                return (<h3>What is CORS</h3>);
             },
             "answer": function() {
                 return (
