@@ -3,7 +3,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { twilight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const highlight = (s) => {
-    return (<span className="highlight">{s}</span>);
+    return (<span className="highlight"><b>{s}</b></span>);
 }
 
 export const questions = {
@@ -15,11 +15,7 @@ export const questions = {
                 )
             },
             "answer": function() {
-                const codeBlock = `
-                    <script src='file.js'></script>
-                    <script src='file.js' defer></script>
-                    <script src='file.js' async></script>
-                `;
+                const codeBlock = `<script src='file.js'></script>\n<script src='file.js' defer></script>\n<script src='file.js' async></script>`;
 
                 return (
                     <>
@@ -38,16 +34,11 @@ export const questions = {
                 return (<h3>describe {highlight(".bind()")} and how to use</h3>);
             },
             "answer": function() {
-                const codeBlock = `
-                    var a = function(){}.bind(1);// works
-                    var a = a.bind(1);// works
-                    function a(){}.bind(1)// doesn't work
-                    a().bind(1);// doesn't work
-                `;
+                const codeBlock = `var a = function(){}.bind(1);// works\nvar a = a.bind(1);// works\nfunction a(){}.bind(1)// doesn't work\na().bind(1);// doesn't work`;
 
                 return (
                     <>
-                        <div>Has to be used when we define a function expression, and not when we call it. Also doesn't work with function declarations.</div>
+                        <div>Has to be used when we define a function expression, and not when we call it. Also it doesn't work with function declarations.</div>
                         <SyntaxHighlighter language="javascript" style={twilight}>
                             {codeBlock}
                         </SyntaxHighlighter>
@@ -57,38 +48,126 @@ export const questions = {
         },
         2: {
             "question": function() {
-                const codeBlock = `
-                    function ex(){
-                        console.log(this);
-                    }
-                    const boundEx = bind(ex, {a: true})
-                    boundEx.call({b: true})// logs {a: true}
+                const codeBlock = `function ex(){\n    console.log(this);\n}\nconst boundEx = bind(ex, {a: true})\nboundEx.call({b: true})// logs {a: true}`;
+
+                return (
+                    <>
+                        <SyntaxHighlighter language="javascript" style={twilight}>
+                            {codeBlock}
+                        </SyntaxHighlighter>
+                        <h3>Create a standalone function bind that is functionally equivalent to the method Function.prototype.bind</h3>
+                    </>
+                );
+            },
+            "answer": function() {
+                const codeBlock = `const bind = (fn, context) => (..args) => {\n    fn.apply(context, args)\n}`;
+
+                return (
+                    <SyntaxHighlighter language="javascript" style={twilight}>
+                        {codeBlock}
+                    </SyntaxHighlighter>
+                );
+            }
+        },
+        3: {
+            "question": function() {
+                return (
+                    <h3>How do you clone an object</h3>
+                );
+            },
+            "answer": function() {
+                const codeBlock = `const obj2 = {...obj}\n\nconst obj2 = JSON.parse(JSON.stringify(obj))\n\nObject.assign({}, obj)\n\nfunction object(o) {\n    function F() {}\n    F.prototype = o;\n    return new F();\n}\nvar newObject = object(oldObject);\n//aka\nvar newObject = Object.create(oldObject);
                 `;
 
                 return (
                     <>
-                        <h3>Create a standalone function bind that is functionally equivalent to the method Function.prototype.bind</h3>
-                        <br></br>
+                        <div>Sincee objects are passed by reference you need to shallow copy</div>
                         <SyntaxHighlighter language="javascript" style={twilight}>
                             {codeBlock}
                         </SyntaxHighlighter>
                     </>
                 );
+            }
+        },
+        4: {
+            "question": function() {
+                return (
+                    <h3>How to create an object where you simulate having private member variables. AKA immuatable variables</h3>
+                );
             },
             "answer": function() {
-                const codeBlock = `
-                    var a = function(){}.bind(1);//works
-                    var a = a.bind(1);// works
-                    function a(){}.bind(1);// doesn't work
-                    a().bind(1);// doesn't work
-                `;
+                const codeBlock = `function Person(first, last) {\n    this.first = first;\n    this.last = last;\n    this.full_name = function() {\n        return first+last;\n    }\n}\nconst person = new Person("john", "smith");`;
+
+                return (
+                    <SyntaxHighlighter language="javascript" style={twilight}>
+                        {codeBlock}
+                    </SyntaxHighlighter>
+                );
+            }
+            
+        },
+        5: {
+            "question": function() {
+                return (
+                    <h3>Describe the Prototype Chain</h3>
+                );
+            },
+            "answer": function() {
+                return (
+                    <>
+                        <div>
+                            Links objects by the .__proto__ (object) or .prototype (function) and when checking for props it will ascend
+                            down the chain till it's found or hits the end.
+                        </div>
+                        <div>to quickly check use {highlight(".isPrototypeOf()")}</div>
+                    </>
+                );
+            }
+        },
+        6: {
+            "question": function() {
+                return (
+                    <h3>What is callback hell and how do we combat this</h3>
+                );
+            },
+            "answer": function() {
+                const codeBlock = `do(() => {\n    do(() => {\n        do(() => {\n        })\n    })\n})`;
 
                 return (
                     <>
-                        <div>Has to be used when we define a function expression, and not when we call it. Also doesn't work with function declarations.</div>
                         <SyntaxHighlighter language="javascript" style={twilight}>
                             {codeBlock}
                         </SyntaxHighlighter>
+                        <div>
+                            If you want to perform another process after your previous callback then you will need to chain them
+                            and it gets really long and confusing the more you chain.
+                        </div>
+                        <div>
+                            It is easy to prevent this by using Promises introduced with ES6
+                        </div>
+                    </>
+                );
+            }
+        },
+        7: {
+            "question": function() {
+                return (
+                    <h3>Create an object by using class & extend with super and describe its advantages</h3>
+                );
+            },
+            "answer": function() {
+                const codeBlock = `class Student extends Person {\n    constructor (first, last, course){\n        super(first, last);\n        this.course = course;\n    }\n    name() {\n        return \`\${super.name()} & I study \${this.course}\`;\n    }\n}`;
+
+                return (
+                    <>
+                        <SyntaxHighlighter language="javascript" style={twilight}>
+                            {codeBlock}
+                        </SyntaxHighlighter>
+                        <div>
+                            It is prototypical and constructor pattern still but with these additional keywords to make it easier.
+                            You can use the other methods of making object and inheritance but combine with this new stuff. *ES6 class
+                            can extend to ES5 object functions
+                        </div>
                     </>
                 );
             }
@@ -110,14 +189,17 @@ export const questions = {
                 return (<h3>types of @ media properties</h3>)
             },
             "answer": function() {
-                const example = `<link rel="stylesheet" media="screen and (max-width: 600px)`;
+                const example = `<link rel="stylesheet" media="screen and (max-width: 600px)"></link>`;
                 return (
                     <>
                         <div><b>all:</b> applies to all media type devices</div>
                         <div><b>print:</b> applies only to printers</div>
                         <div><b>screen:</b> applies to screens(desktop, tablets, mobile, etc)</div>
                         <div><b>speech:</b> screen readers</div>
-                        <div><b>exmaple:</b> {example}</div>
+                        <div><b>exmaple:</b></div>
+                        <SyntaxHighlighter language="html" style={twilight}>
+                            {example}
+                        </SyntaxHighlighter>
                     </>
                 );
             }
@@ -127,18 +209,21 @@ export const questions = {
                 return (<h3>How to animate show and disappearing an item</h3>);
             },
             "answer": function() {
-                const codeBlock = `
-                    .show{
-                        visibility: visible;
-                        opacity: 1;
-                        transition: opacity 3s, visibility 3s;
-                    }
-                    .hide {
-                        visibility: hidden;
-                        opacity: 0;
-                        transition: opacity 3s, visibility 3s;
-                    }
-                `;
+                const codeBlock = `.show {\n    visibility: visible;\n    opacity: 1;\n    transition: opacity 3s, visibility 3s;\n}\n.hide {\n    visibility: hidden;\n    opacity: 0;\n    transition: opacity 3s, visibility 3s;\n}`;
+
+                return (
+                    <SyntaxHighlighter language="css" style={twilight}>
+                        {codeBlock}
+                    </SyntaxHighlighter>
+                );
+            }
+        },
+        2: {
+            "question": function() {
+                return (<h3>How to center</h3>);
+            },
+            "answer": function() {
+                const codeBlock = `.center {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}`;
 
                 return (
                     <SyntaxHighlighter language="css" style={twilight}>
