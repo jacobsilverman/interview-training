@@ -1,6 +1,6 @@
 import "./Questions.css";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { twilight } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const highlight = (s) => {
     return (<span className="highlight"><b>{s}</b></span>);
@@ -22,7 +22,7 @@ export const questions = {
                         <div><b>1.</b> none: excuted synschronously, neither can be used inline, need src.</div>
                         <div><b>2.</b> defer: downloads the script while the document is stilling parsing, but waits till it finishes parsing before executing it. Scripts rely on eachother use DOMContentLoaded event listener is the same.</div>
                         <div><b>3.</b> async: downloads the script during parsing the doc but will pause the parser to execute the script before it finishes parsing. Doesn't neccessarily execute in order. Use if scripts are independent of eachother.</div>
-                        <SyntaxHighlighter language="html" style={twilight}>
+                        <SyntaxHighlighter language="html" style={prism}>
                             {codeBlock}
                         </SyntaxHighlighter>
                     </>
@@ -39,7 +39,7 @@ export const questions = {
                 return (
                     <>
                         <div>Has to be used when we define a function expression, and not when we call it. Also it doesn't work with function declarations.</div>
-                        <SyntaxHighlighter language="javascript" style={twilight}>
+                        <SyntaxHighlighter language="javascript" style={prism}>
                             {codeBlock}
                         </SyntaxHighlighter>
                     </>
@@ -52,7 +52,7 @@ export const questions = {
 
                 return (
                     <>
-                        <SyntaxHighlighter language="javascript" style={twilight}>
+                        <SyntaxHighlighter language="javascript" style={prism}>
                             {codeBlock}
                         </SyntaxHighlighter>
                         <h3>Create a standalone function bind that is functionally equivalent to the method Function.prototype.bind</h3>
@@ -63,7 +63,7 @@ export const questions = {
                 const codeBlock = `const bind = (fn, context) => (..args) => {\n    fn.apply(context, args)\n}`;
 
                 return (
-                    <SyntaxHighlighter language="javascript" style={twilight}>
+                    <SyntaxHighlighter language="javascript" style={prism}>
                         {codeBlock}
                     </SyntaxHighlighter>
                 );
@@ -82,7 +82,7 @@ export const questions = {
                 return (
                     <>
                         <div>Sincee objects are passed by reference you need to shallow copy</div>
-                        <SyntaxHighlighter language="javascript" style={twilight}>
+                        <SyntaxHighlighter language="javascript" style={prism}>
                             {codeBlock}
                         </SyntaxHighlighter>
                     </>
@@ -99,7 +99,7 @@ export const questions = {
                 const codeBlock = `function Person(first, last) {\n    this.first = first;\n    this.last = last;\n    this.full_name = function() {\n        return first+last;\n    }\n}\nconst person = new Person("john", "smith");`;
 
                 return (
-                    <SyntaxHighlighter language="javascript" style={twilight}>
+                    <SyntaxHighlighter language="javascript" style={prism}>
                         {codeBlock}
                     </SyntaxHighlighter>
                 );
@@ -135,7 +135,7 @@ export const questions = {
 
                 return (
                     <>
-                        <SyntaxHighlighter language="javascript" style={twilight}>
+                        <SyntaxHighlighter language="javascript" style={prism}>
                             {codeBlock}
                         </SyntaxHighlighter>
                         <div>
@@ -160,13 +160,17 @@ export const questions = {
 
                 return (
                     <>
-                        <SyntaxHighlighter language="javascript" style={twilight}>
+                        <SyntaxHighlighter language="javascript" style={prism}>
                             {codeBlock}
                         </SyntaxHighlighter>
                         <div>
                             It is prototypical and constructor pattern still but with these additional keywords to make it easier.
                             You can use the other methods of making object and inheritance but combine with this new stuff. *ES6 class
                             can extend to ES5 object functions
+                        </div>
+                        <div>
+                            super calls the constructor of the extended class. You always need to call the super of the base class 
+                            before using this.
                         </div>
                     </>
                 );
@@ -176,10 +180,15 @@ export const questions = {
     "React": {
         0: {
             "question": function() {
-                return (<h3>What is the virtual DOM</h3>)
+                return (<h3>What is the advantage of using keys</h3>)
             },
             "answer":  function() {
-                return (<div>not the DOM</div>);
+                return (
+                    <>
+                        <div>To perform the fewest DOM manipulations as possible. When rerendering it can track new vs. already available.</div>
+                        <div>{highlight("Important:")} Always use a unique id and never use index since it can periodically change depending on the code.</div>
+                    </>
+                );
             }
         }
     },
@@ -189,7 +198,7 @@ export const questions = {
                 return (<h3>types of @ media properties</h3>)
             },
             "answer": function() {
-                const example = `<link rel="stylesheet" media="screen and (max-width: 600px)"></link>`;
+                const codeBlock = `<link rel="stylesheet" media="screen and (max-width: 600px)"></link>`;
                 return (
                     <>
                         <div><b>all:</b> applies to all media type devices</div>
@@ -197,8 +206,8 @@ export const questions = {
                         <div><b>screen:</b> applies to screens(desktop, tablets, mobile, etc)</div>
                         <div><b>speech:</b> screen readers</div>
                         <div><b>exmaple:</b></div>
-                        <SyntaxHighlighter language="html" style={twilight}>
-                            {example}
+                        <SyntaxHighlighter language="html" style={prism}>
+                            {codeBlock}
                         </SyntaxHighlighter>
                     </>
                 );
@@ -212,7 +221,7 @@ export const questions = {
                 const codeBlock = `.show {\n    visibility: visible;\n    opacity: 1;\n    transition: opacity 3s, visibility 3s;\n}\n.hide {\n    visibility: hidden;\n    opacity: 0;\n    transition: opacity 3s, visibility 3s;\n}`;
 
                 return (
-                    <SyntaxHighlighter language="css" style={twilight}>
+                    <SyntaxHighlighter language="css" style={prism}>
                         {codeBlock}
                     </SyntaxHighlighter>
                 );
@@ -226,9 +235,40 @@ export const questions = {
                 const codeBlock = `.center {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}`;
 
                 return (
-                    <SyntaxHighlighter language="css" style={twilight}>
+                    <SyntaxHighlighter language="css" style={prism}>
                         {codeBlock}
                     </SyntaxHighlighter>
+                );
+            }
+        },
+        3: {
+            "question": function() {
+                return (<h3>Describe the Box Model and each of its parts</h3>)
+            },
+            "answer":  function() {
+                return (
+                    <>
+                        <div style={{display:"flex", justifyContent:"center"}}>
+                            <div style={{width:"250px",height:"250px",border:"1px solid black",textAlign:"center",backgroundColor:"lightgrey"}}>
+                                <div>Margin</div>
+                                <div style={{width:"200px",height:"200px",border:"1px solid black",display:"inline-block",backgroundColor:"lightblue"}}>
+                                    <div>Border</div>
+                                    <div style={{width:"150px",height:"150px",border:"1px solid black",display:"inline-block",backgroundColor:"lightgrey"}}>
+                                        <div>Padding</div>
+                                        <div style={{width:"100px",height:"100px",border:"1px solid black",display:"inline-flex",alignItems:"center",justifyContent:"center",backgroundColor:"white"}}>
+                                            Content
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style={{textAlign:"center"}}>
+                            <div><b>Content</b> - The content of the box, where text and images appear</div>
+                            <div><b>Padding</b> - Clears an area around the content. The padding is transparent</div>
+                            <div><b>Border</b> - A border that goes around the padding and content</div>
+                            <div><b>Margin</b> - Clears an area outside the border. The margin is transparent</div>
+                        </div>
+                    </>
                 );
             }
         }
