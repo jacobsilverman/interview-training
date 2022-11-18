@@ -175,6 +175,89 @@ export const questions = {
                     </>
                 );
             }
+        },
+        8: {
+            "question": function() {
+                return (
+                    <h3>what does ?? do</h3>
+                );
+            },
+            "answer": function() {
+                const codeBlock = `const foo = (null || undefined) ?? 'default';`;
+
+                return (
+                    <>
+                        <div>
+                            <b>Nullish Coalescing operator:</b>
+                        </div>
+                        <div>
+                            Used after optional chaining in order to build a default value when none was found
+                        </div>
+                        <SyntaxHighlighter language="javascript" style={prism}>
+                            {codeBlock}
+                        </SyntaxHighlighter>
+                    </>
+                );
+            }
+        },
+        9: {
+            "question": function() {
+                return (
+                    <h3>what does it mean to interpolate</h3>
+                );
+            },
+            "answer": function() {
+                const codeBlock = `const example = \`any text \${expression} any text\``;
+
+                return (
+                    <>
+                        <div>
+                            It means to add a substitution of the placeholders and then concatenate the parts into a single word
+                        </div>
+                        <SyntaxHighlighter language="javascript" style={prism}>
+                            {codeBlock}
+                        </SyntaxHighlighter>
+                    </>
+                );
+            }
+        },
+        10: {
+            "question": function() {
+                return (
+                    <h3>What are some Object functions</h3>
+                );
+            },
+            "answer": function() {
+                const codeBlock = `Object.assign()\nObject.create()\nObject.entries()\nObject.fromEntries()\nObject.keys()\nObject.values()\nObject.toString()`;
+
+                return (
+                    <SyntaxHighlighter language="javascript" style={prism}>
+                        {codeBlock}
+                    </SyntaxHighlighter>
+                );
+            }
+        },
+        11: {
+            "question": function() {
+                return (
+                    <h3>What is Compilation vs Polyfilling</h3>
+                );
+            },
+            "answer": function() {
+                const codeBlock = `Object.assign()\nObject.create()\nObject.entries()\nObject.fromEntries()\nObject.keys()\nObject.values()\nObject.toString()`;
+
+                return (
+                    <>
+                        <div>
+                            {highlight("Compilation")} allows devs to use newer cersions of JS. It takes what you write in latest JS, and compiles your code down to an older version of JS which allows older browsers to read. Babel is an example of how to compile.
+                        </div>
+                        <div>
+                            {highlight("Polyfilling")} is when you can't add a feature by compilations but you want to accomplish the same goal. Ex. Promise is a brand new feature not created in ES5, and can't compile to lower versions. 
+                            Polyfill will write the promise in older code even though it's not available in old Js versions. After polyfill we can use Promise in ES5. Core.js allows for polyfilling.
+                        </div>
+                    </>
+                );
+            }
         }
     },
     "React": {
@@ -187,6 +270,24 @@ export const questions = {
                     <>
                         <div>To perform the fewest DOM manipulations as possible. When rerendering it can track new vs. already available.</div>
                         <div>{highlight("Important:")} Always use a unique id and never use index since it can periodically change depending on the code.</div>
+                    </>
+                );
+            }
+        },
+        1: {
+            "question": function() {
+                return (<h3>What is Reconciliation and Fiber</h3>)
+            },
+            "answer":  function() {
+                const codeBlock = `ReactDOM.render(\n    <App />\n    document.getElementById("root");\n);`;
+                
+                return (
+                    <>
+                        <SyntaxHighlighter language="javascript" style={prism}>
+                            {codeBlock}
+                        </SyntaxHighlighter>
+                        <div>Kicks off the whole process of generating the tree of Element/Virtual DOM, essentially how it checks when elements change which causes them to be destroyed & rerendered. {highlight("render()")}</div>
+                        <div>Once the difference between the DOM and vitual DOM Fiber will write a rerender.</div>
                     </>
                 );
             }
@@ -271,17 +372,50 @@ export const questions = {
                     </>
                 );
             }
-        }
+        },
+        4: {
+            "question": function() {
+                return (<h3>Advantages of using css preprocessors</h3>);
+            },
+            "answer": function() {
+                return (
+                    <>
+                        <div>
+                            CSS preprocessors add useful functionality that native CSS does not have, and generally make CSS neater and more maintainable by enabling DRY (Don't Repeat Yourself) principles. 
+                            Their terse syntax for nested selectors cuts down on repeated code. They provide variables for consistent theming (however, CSS variables have largely replaced this functionality) 
+                            and additional tools like color functions (lighten, darken, transparentize, etc), mixins, and loops that make CSS more like a real programming language and gives the developer more 
+                            power to generate complex CSS.
+                        </div>
+                        <div>
+                            They allow us to write more amintainable and scalable CSS. Some disadavantages are the setup, re-compilation time can be slowed. Exs: {highlight("Sass, Less, Stylus")}
+                        </div>
+                    </>
+                );
+            }
+        },
     },
     "Html": {
         0: {
             "question": function() {
-                return (<h3>describe and element</h3>)
+                return (
+                    <h3>difference between <span className="highlight">async</span> and <span className="highlight">defer</span> in the <span className="highlight">&lt;script&gt;</span> tag and if none are used</h3>
+                )
             },
             "answer": function() {
-                return (<div>HTML</div>);
+                const codeBlock = `<script src='file.js'></script>\n<script src='file.js' defer></script>\n<script src='file.js' async></script>`;
+
+                return (
+                    <>
+                        <div><b>1.</b> none: excuted synschronously, neither can be used inline, need src.</div>
+                        <div><b>2.</b> defer: downloads the script while the document is stilling parsing, but waits till it finishes parsing before executing it. Scripts rely on eachother use DOMContentLoaded event listener is the same.</div>
+                        <div><b>3.</b> async: downloads the script during parsing the doc but will pause the parser to execute the script before it finishes parsing. Doesn't neccessarily execute in order. Use if scripts are independent of eachother.</div>
+                        <SyntaxHighlighter language="html" style={prism}>
+                            {codeBlock}
+                        </SyntaxHighlighter>
+                    </>
+                );
             }
-        }
+        },
     },
     "Network": {
         0: {

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { questions } from "./Constants/Questions.jsx";
 import { Button, Paper } from '@mui/material';
@@ -14,8 +14,9 @@ function App() {
     "Network": {}
   });
 
+  const [sort, setSort] = useState("All");
+
   const showAnswer = (topic, key) => {
-    console.log(show[topic][key]);
     setShow(current => {
       return {
         ...current,
@@ -36,7 +37,6 @@ function App() {
             <div>{value.question()}</div>
             <Button onClick={() => showAnswer(topic, innerKey)}>{(!show[topic][innerKey]) ? 'show answer' : 'hide answer'}</Button>
           </div>
-          
           {show[topic][innerKey] && <div className={containerCls}>{value.answer()}</div>}
         </Paper>
       )
@@ -45,14 +45,13 @@ function App() {
 
   const display = () => {
     return (
-      Object.keys(questions).map((key) => {
-        return (
-          <div key={key}>
-            <h2 className="topic">{key}</h2>
+      Object.keys(questions).map((topic) => {
+        return (topic === sort || sort === "All") && (
+          <div key={topic}>
+            <h2 className="topic">{topic}</h2>
             <div className="questions-container">
-              {questionAnswer(questions[key], key)}
+              {questionAnswer(questions[topic], topic)}
             </div>
-            
           </div>
         )
       })
@@ -63,6 +62,14 @@ function App() {
     <div className="App">
       <header>
         <h1>Interview Questions</h1>
+        <select onChange={(e) => setSort(e.target.value)}>
+          <option>All</option>
+          <option>Javascript</option>
+          <option>React</option>
+          <option>Html</option>
+          <option>Css</option>
+          <option>Network</option>
+        </select>
       </header>
       {display()}
     </div>
